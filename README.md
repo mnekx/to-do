@@ -1,56 +1,51 @@
 ![](https://img.shields.io/badge/Microverse-blueviolet)
 
-# Project Name
+# TO-DO
 
-> Description the project.
-
+> Simple yet power daily to-do list application
 
 ## Built With
 
-- Major languages
-- Frameworks
-- Technologies used
+- ES6 Javascript, HTML, CSS
+- Fontawesome
 
 ## Live Demo (if available)
 
-[Live Demo Link](https://livedemo.com)
-
+[Live Demo Link](https://mnekx.github.io/to-do/)
 
 ## Getting Started
 
-**This is an example of how you may give instructions on setting up your project locally.**
-**Modify this file to match your project, remove sections that don't apply. For example: delete the testing section if the currect project doesn't require testing.**
-
-
-To get a local copy up and running follow these simple example steps.
+To get a local copy up and running follow these simple steps.
 
 ### Prerequisites
 
+Fontawesome 6.0.0 or higher
+
 ### Setup
+
+1. git clone https://github.com/mnekx/to-do.git
+2. cd to-do
+3. npm install
+4. npm start to serve into local 8080 port
 
 ### Install
 
-### Usage
-
-### Run tests
+1. git clone https://github.com/mnekx/to-do.git
+2. cd to-do
+3. npm install
+4. npm start to serve into local 8080 port
 
 ### Deployment
 
-
+https://mnekx.github.io/to-do/
 
 ## Authors
 
-👤 **Author1**
+👤 **Mnemba Chambuya**
 
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/linkedinhandle)
-
-👤 **Author2**
-
-- GitHub: [@githubhandle](https://github.com/githubhandle)
-- Twitter: [@twitterhandle](https://twitter.com/twitterhandle)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/linkedinhandle)
+- GitHub: [@githubhandle](https://github.com/mnekx)
+- Twitter: [@twitterhandle](https://twitter.com/MnembaChambuya)
+- LinkedIn: [LinkedIn](https://linkedin.com/in/mnemba-chambuya)
 
 ## 🤝 Contributing
 
@@ -64,9 +59,7 @@ Give a ⭐️ if you like this project!
 
 ## Acknowledgments
 
-- Hat tip to anyone whose code was used
-- Inspiration
-- etc
+- Thanks to @shaan in his blog at https://webdevtrick.com/html-drag-and-drop-list/ for the inspiration
 
 ## 📝 License
 
