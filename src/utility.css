@@ -9,9 +9,8 @@
 
 .item {
   justify-content: space-between;
-  height: 3rem;
   border-bottom: 1px solid gray;
-  align-items: center;
+  align-items: baseline;
   padding: 0.7rem 1.3rem;
 }
 
@@ -34,4 +33,16 @@
 
 .reset {
   width: 100%;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-inline-block {
+  display: inline-block;
 }
