@@ -47,6 +47,8 @@ https://mnekx.github.io/to-do/
 - Twitter: [@twitterhandle](https://twitter.com/MnembaChambuya)
 - LinkedIn: [LinkedIn](https://linkedin.com/in/mnemba-chambuya)
 
+## Screenshot ![see](./images/screenshot.png?raw=true "Title")
+
 ## 🤝 Contributing
 
 Contributions, issues, and feature requests are welcome!
