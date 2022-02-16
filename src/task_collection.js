@@ -50,15 +50,17 @@ export default class TaskCollection {
     listItem.id = "task-" + newTask.index;
     listItem.setAttribute("draggable", true);
     let label = document.createElement("label");
+    label.id = "label-" + newTask.index;
     label.setAttribute("for", "task" + newTask.index);
-    let taskDesc = document.createElement("input");
-    taskDesc.setAttribute("type", "checkbox");
-    taskDesc.id = "task" + newTask.index;
-    taskDesc.setAttribute("name", "task" + newTask.index);
-    label.appendChild(taskDesc);
-    label.textContent += newTask.description;
+    let status = document.createElement("input");
+    status.setAttribute("type", "checkbox");
+    status.id = "task" + task.index;
+    status.setAttribute("name", "status-" + task.index);
+    label.appendChild(status);
+    label.append(newTask.description);
     listItem.appendChild(label);
     let controls = document.createElement("div");
+    controls.id = "controls-" + newTask.index;
     controls.classList.add("controls");
     let removeBtn = document.createElement("button");
     removeBtn.classList.add("remove-btn");
@@ -70,9 +72,19 @@ export default class TaskCollection {
     editBtn.id = "edit-btn-" + newTask.index;
     editBtn.innerText = "Edit";
     controls.appendChild(editBtn);
+    let editInput = document.createElement("input");
+    editInput.setAttribute("type", "text");
+    editInput.className = "edit-input d-none";
+    editInput.value = newTask.description;
+    editInput.id = "edit-input-" + newTask.index;
+    listItem.appendChild(editInput);
     listItem.appendChild(controls);
     ul.appendChild(listItem);
+
+    // Add event listeners
     this.addTaskRemoveEventListener(newTask.index);
+    this.addTaskEditBtnEventListener(newTask.index);
+    this.addTaskEditInputEventListener(newTask.index);
   }
 
   addTaskRemoveEventListener(index) {
@@ -82,6 +94,43 @@ export default class TaskCollection {
       //   console.log(index);
       console.log(this);
       this.remove(index);
+    });
+  }
+
+  addTaskEditBtnEventListener(index) {
+    let editBtn = document.querySelector("#edit-btn-" + index);
+    editBtn.addEventListener("click", () => {
+      let controls = document.querySelector("#controls-" + index);
+      controls.classList.add("d-none");
+      let label = document.querySelector("#label-" + index);
+      label.classList.add("d-none");
+      let editInput = document.querySelector("#edit-input-" + index);
+      editInput.classList.remove("d-none");
+    });
+  }
+
+  addTaskEditInputEventListener(index) {
+    let editInput = document.querySelector("#edit-input-" + index);
+    editInput.addEventListener("keypress", (e) => {
+      if (e.keyCode === 13) {
+        this.editTask(index, e.target.value);
+        e.preventDefault();
+
+        let controls = document.querySelector("#controls-" + index);
+        controls.classList.remove("d-none");
+        let label = document.querySelector("#label-" + index);
+        label.innerHTML = "";
+        label.classList.remove("d-none");
+        let status = document.createElement("input");
+        status.setAttribute("type", "checkbox");
+        status.id = "task" + index;
+        status.setAttribute("name", "status-" + index);
+        label.appendChild(status);
+        label.append(e.target.value);
+        let editInput = document.querySelector("#edit-input-" + index);
+        editInput.classList.add("d-none");
+        console.log(editInput);
+      }
     });
   }
 
@@ -124,15 +173,17 @@ export default class TaskCollection {
       listItem.id = "task-" + task.index;
       listItem.setAttribute("draggable", true);
       let label = document.createElement("label");
+      label.id = "label-" + task.index;
       label.setAttribute("for", "task" + task.index);
-      let taskDesc = document.createElement("input");
-      taskDesc.setAttribute("type", "checkbox");
-      taskDesc.id = "task" + task.index;
-      taskDesc.setAttribute("name", "task" + task.index);
-      label.appendChild(taskDesc);
-      label.textContent += task.description;
+      let status = document.createElement("input");
+      status.setAttribute("type", "checkbox");
+      status.id = "task" + task.index;
+      status.setAttribute("name", "status-" + task.index);
+      label.appendChild(status);
+      label.append(task.description);
       listItem.appendChild(label);
       let controls = document.createElement("div");
+      controls.id = "controls-" + task.index;
       controls.classList.add("controls");
       let removeBtn = document.createElement("button");
       removeBtn.classList.add("remove-btn");
@@ -144,9 +195,19 @@ export default class TaskCollection {
       editBtn.id = "edit-btn-" + task.index;
       editBtn.innerText = "Edit";
       controls.appendChild(editBtn);
+      let editInput = document.createElement("input");
+      editInput.setAttribute("type", "text");
+      editInput.className = "edit-input d-none";
+      editInput.value = task.description;
+      editInput.id = "edit-input-" + task.index;
+      listItem.appendChild(editInput);
       listItem.appendChild(controls);
       ul.appendChild(listItem);
+
+      //   Add event listeners
       this.addTaskRemoveEventListener(task.index);
+      this.addTaskEditBtnEventListener(task.index);
+      this.addTaskEditInputEventListener(task.index);
     });
   }
 
@@ -154,9 +215,9 @@ export default class TaskCollection {
     return this.collection.filter((task) => parseInt(id, 10) === task.id);
   }
 
-  editTask(id, data) {
+  editTask(index, data) {
     const idx = this.collection.findIndex(
-      (task) => task.id === parseInt(id, 10)
+      (task) => task.index === parseInt(index, 10)
     );
     this.collection[idx].name = data;
   }
