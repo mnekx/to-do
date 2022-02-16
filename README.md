@@ -43,9 +43,9 @@ https://mnekx.github.io/to-do/
 
 👤 **Mnemba Chambuya**
 
-- GitHub: [@githubhandle](https://github.com/mnekx)
-- Twitter: [@twitterhandle](https://twitter.com/MnembaChambuya)
-- LinkedIn: [LinkedIn](https://linkedin.com/in/mnemba-chambuya)
+- GitHub: [@mnekx](https://github.com/mnekx)
+- Twitter: [@MnembaChambuya](https://twitter.com/MnembaChambuya)
+- LinkedIn: [mnemba-chambuya](https://linkedin.com/in/mnemba-chambuya)
 
 ## Screenshot ![see](./images/screenshot.png?raw=true "Title")
 
