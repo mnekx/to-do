@@ -33,7 +33,7 @@ ul {
 
 label {
   width: auto;
-  align-items: center;
+  align-items: baseline;
   justify-content: space-between;
   font-size: 1.2rem;
 }
@@ -48,7 +48,6 @@ input[type="text"] {
   width: 100%;
   outline: none;
   border: none;
-  border-top: 1px solid gray;
   padding: 0.7rem 1.3rem;
   height: 3rem;
   font-size: 1.2rem;
@@ -69,4 +68,8 @@ button[type='reset']:hover {
 
 button[type='reset']:active {
   background-color: rgb(210, 210, 210);
+}
+
+#add-input {
+  border-top: 1px solid gray;
 }
