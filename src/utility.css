@@ -1,0 +1,37 @@
+.d-flex {
+  display: flex;
+}
+
+.container {
+  margin: 0 auto;
+  width: 90%;
+}
+
+.item {
+  justify-content: space-between;
+  height: 3rem;
+  border-bottom: 1px solid gray;
+  align-items: center;
+  padding: 0.7rem 1.3rem;
+}
+
+.item:last-of-type {
+  border-bottom: none;
+}
+
+.item:first-of-type {
+  border-top: 1px solid gray;
+}
+
+.item:hover {
+  cursor: move;
+}
+
+.delete,
+.edit {
+  display: inline-block;
+}
+
+.reset {
+  width: 100%;
+}
