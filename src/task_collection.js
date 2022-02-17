@@ -6,40 +6,39 @@ export default class TaskCollection {
       {
         description: "This is Task 1 with bigger length!",
         completed: false,
-        index: 0,
+        index: 1,
       },
       {
         description: "Task 2",
         completed: false,
-        index: 1,
+        index: 2,
       },
       {
         description: "Task 3",
         completed: false,
-        index: 2,
+        index: 3,
       },
       {
         description: "Task 4",
         completed: false,
-        index: 3,
+        index: 4,
       },
       {
         description: "Task 5",
         completed: false,
-        index: 4,
+        index: 5,
       },
       {
         description: "Task 6",
         completed: false,
-        index: 5,
+        index: 6,
       },
     ];
     TaskCollection.counter = this.collection.length;
   }
 
   add(desc) {
-    const idx = TaskCollection.counter;
-    TaskCollection.counter += 1;
+    const idx = this.getCollection().length + 1;
     const newTask = { index: idx, description: desc, completed: false };
     this.collection.push(newTask);
 
@@ -54,8 +53,8 @@ export default class TaskCollection {
     label.setAttribute("for", "task" + newTask.index);
     let status = document.createElement("input");
     status.setAttribute("type", "checkbox");
-    status.id = "task" + task.index;
-    status.setAttribute("name", "status-" + task.index);
+    status.id = "task" + newTask.index;
+    status.setAttribute("name", "status-" + newTask.index);
     label.appendChild(status);
     label.append(newTask.description);
     listItem.appendChild(label);
@@ -89,10 +88,7 @@ export default class TaskCollection {
 
   addTaskRemoveEventListener(index) {
     let removeBtn = document.querySelector("#remove-btn-" + index);
-    // console.log(removeBtn);
     removeBtn.addEventListener("click", (e) => {
-      //   console.log(index);
-      console.log(this);
       this.remove(index);
     });
   }
@@ -129,18 +125,31 @@ export default class TaskCollection {
         label.append(e.target.value);
         let editInput = document.querySelector("#edit-input-" + index);
         editInput.classList.add("d-none");
-        console.log(editInput);
       }
     });
   }
 
   remove(idx) {
-    // console.log("removes....");
     this.collection = this.collection.filter(
       (task) => task.index !== parseInt(idx, 10)
     );
     const toRemove = document.querySelector("#task-" + idx);
     toRemove.remove();
+    TaskCollection.counter -= 1;
+    this.resetIndexes(idx);
+    this.render();
+  }
+
+  resetIndexes(deletedIndex) {
+    if (deletedIndex < this.getCollection().length) {
+      for (
+        let idx = deletedIndex - 1;
+        idx < this.getCollection().length;
+        idx += 1
+      ) {
+        this.getCollection()[idx].index = idx + 1;
+      }
+    }
   }
 
   getCollection() {
@@ -160,13 +169,13 @@ export default class TaskCollection {
           <button id="edit-btn-${task.index}">Edit</button>
           </div>
         </li>`;
-      //   console.log(task.index);
       this.addTaskRemoveEventListener(task.index);
     });
   }
 
   render() {
     const ul = document.querySelector("ul");
+    ul.innerHTML = "";
     this.getCollection().forEach((task) => {
       let listItem = document.createElement("li");
       listItem.className = "d-flex item";
