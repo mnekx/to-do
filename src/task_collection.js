@@ -87,7 +87,6 @@ export default class TaskCollection {
   }
 
   toggleStatus(index) {
-    // this.collection[index - 1].completed = !this.collection[index - 1];
     this.collection[index - 1]["completed"] =
       !this.collection[index - 1]["completed"];
   }
@@ -184,5 +183,11 @@ export default class TaskCollection {
     );
     this.collection[idx].description = data;
     populateStorage(this.getCollection());
+  }
+
+  clearAll() {
+    this.collection = [];
+    populateStorage(this.collection);
+    this.render();
   }
 }
