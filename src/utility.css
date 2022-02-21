@@ -1,0 +1,77 @@
+.d-flex {
+  display: flex;
+}
+
+.container {
+  margin: 0 auto;
+  width: 90%;
+}
+
+.item {
+  justify-content: space-between;
+  border-bottom: 1px solid gray;
+  align-items: baseline;
+  padding: 0.7rem 1.3rem;
+  position: relative;
+}
+
+.item:last-of-type {
+  border-bottom: none;
+}
+
+.item:first-of-type {
+  border-top: 1px solid gray;
+}
+
+.item:hover {
+  cursor: move;
+}
+
+.item::before {
+  content: '';
+  position: absolute;
+  background-color: black;
+  top: 50%;
+  left: 0;
+  width: 0;
+  height: 1px;
+  transition: width 0.5s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  z-index: 1;
+}
+
+.delete,
+.edit {
+  display: inline-block;
+}
+
+.reset {
+  width: 100%;
+}
+
+.d-none {
+  display: none;
+}
+
+.d-block {
+  display: block;
+}
+
+.d-inline-block {
+  display: inline-block;
+}
+
+.completed {
+  opacity: 0.5;
+}
+
+.completed::before {
+  width: 100%;
+}
+
+.status-input {
+  z-index: 2;
+}
+
+.status-input:hover {
+  cursor: pointer;
+}
