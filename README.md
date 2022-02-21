@@ -11,7 +11,7 @@
 
 ## Live Demo (if available)
 
-[Live Demo Link](https://mnekx.github.io/to-do/)
+[Live Demo Link](https://mnekx.github.io/to-do/dist)
 
 ## Getting Started
 
@@ -37,7 +37,7 @@ Fontawesome 6.0.0 or higher
 
 ### Deployment
 
-https://mnekx.github.io/to-do/
+https://mnekx.github.io/to-do/dist
 
 ## Authors
 
