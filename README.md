@@ -10,8 +10,8 @@
 - Fontawesome
 
 ## Live Demo (if available)
-
 [Live Demo Link](https://mnekx.github.io/to-do/dist/)
+
 
 ## Getting Started
 
@@ -36,7 +36,6 @@ Fontawesome 6.0.0 or higher
 4. npm start to serve into local 8080 port
 
 ### Deployment
-
 https://mnekx.github.io/to-do/dist/
 
 ## Authors

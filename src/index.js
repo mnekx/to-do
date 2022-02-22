@@ -69,3 +69,9 @@ addInput.addEventListener('keypress', (e) => {
     e.preventDefault();
   }
 });
+
+const clearBtn = document.querySelector('#reset-btn');
+
+clearBtn.addEventListener('click', () => {
+  tasks.clearAll();
+});
