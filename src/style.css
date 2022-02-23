@@ -36,12 +36,29 @@ label {
   align-items: baseline;
   justify-content: space-between;
   font-size: 1.2rem;
+  position: relative;
+}
+
+label::before {
+  content: '';
+  position: absolute;
+  background-color: black;
+  top: 50%;
+  left: 0;
+  width: 0;
+  height: 1px;
+  transition: width 0.1s cubic-bezier(0.55, 0.055, 0.675, 0.19);
+  z-index: 1;
 }
 
 input {
   height: 1.2rem;
   width: 1.2rem;
   margin-right: 1rem;
+}
+
+input[type="checkbox"] {
+  opacity: 1;
 }
 
 input[type="text"] {
