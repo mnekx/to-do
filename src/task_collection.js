@@ -1,4 +1,5 @@
-import { initializeLocalStorage, populateStorage } from './local_storage.js';
+import { initializeLocalStorage, populateStorage } from "./local_storage.js";
+import "@fortawesome/fontawesome-free/js/all.js";
 
 export default class TaskCollection {
   static counter = 0;
@@ -6,9 +7,10 @@ export default class TaskCollection {
   constructor() {
     this.collection = [];
     TaskCollection.counter = this.collection.length;
-    const tasksArr = initializeLocalStorage(this.collection) !== null
-      ? initializeLocalStorage(this.collection)
-      : [];
+    const tasksArr =
+      initializeLocalStorage(this.collection) !== null
+        ? initializeLocalStorage(this.collection)
+        : [];
     this.setTasks(tasksArr);
   }
 
@@ -20,7 +22,7 @@ export default class TaskCollection {
     populateStorage(this.getCollection());
 
     // Append task to the markup
-    const ul = document.querySelector('ul');
+    const ul = document.querySelector("ul");
     ul.appendChild(this.returnTaskLIMarkup(newTask));
 
     // Add event listeners
@@ -32,65 +34,76 @@ export default class TaskCollection {
 
   addTaskRemoveEventListener(index) {
     const removeBtn = document.querySelector(`#remove-btn-${index}`);
-    removeBtn.addEventListener('click', () => {
+    removeBtn.addEventListener("click", () => {
       this.remove(index);
     });
   }
 
   addTaskEditBtnEventListener(index) {
     const editBtn = document.querySelector(`#edit-btn-${index}`);
-    editBtn.addEventListener('click', () => {
+    editBtn.addEventListener("click", () => {
       const controls = document.querySelector(`#controls-${index}`);
-      controls.classList.add('d-none');
+      controls.classList.add("d-none");
       const label = document.querySelector(`#label-${index}`);
-      label.classList.add('d-none');
+      label.classList.add("d-none");
       const editInput = document.querySelector(`#edit-input-${index}`);
-      editInput.classList.remove('d-none');
+      editInput.classList.remove("d-none");
     });
     this.getCollection();
   }
 
   addTaskEditInputEventListener(index) {
     const editInput = document.querySelector(`#edit-input-${index}`);
-    editInput.addEventListener('keypress', (e) => {
+    editInput.addEventListener("keypress", (e) => {
       if (e.keyCode === 13) {
         this.editTask(index, e.target.value);
         e.preventDefault();
 
         const controls = document.querySelector(`#controls-${index}`);
-        controls.classList.remove('d-none');
+        controls.classList.remove("d-none");
         const label = document.querySelector(`#label-${index}`);
-        label.innerHTML = '';
-        label.classList.remove('d-none');
-        const status = document.createElement('input');
-        status.setAttribute('type', 'checkbox');
+        label.innerHTML = "";
+        label.classList.remove("d-none");
+        const status = document.createElement("input");
+        status.setAttribute("type", "checkbox");
         status.id = `task${index}`;
-        status.setAttribute('name', `status-${index}`);
+        status.classList.add("status-input");
+        status.setAttribute("name", `status-${index}`);
         label.appendChild(status);
+        status.insertAdjacentHTML(
+          "afterend",
+          "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+        );
         label.append(e.target.value);
         const editInput = document.querySelector(`#edit-input-${index}`);
-        editInput.classList.add('d-none');
+        editInput.classList.add("d-none");
+
+        this.addStatusEventListener(index);
+        this.addTaskEditBtnEventListener(index);
+        this.addTaskEditInputEventListener(index);
+        this.addTaskRemoveEventListener(index);
       }
     });
   }
 
   addStatusEventListener(index) {
     const statusInput = document.querySelector(`#task${index}`);
-    statusInput.addEventListener('change', () => {
+    statusInput.addEventListener("change", () => {
       this.toggleStatus(index);
       populateStorage(this.getCollection());
-      const containingLI = document.querySelector(`#task-${index}`);
-      containingLI.classList.toggle('completed');
+      const containingLabel = document.querySelector(`#label-${index}`);
+      containingLabel.classList.toggle("completed");
     });
   }
 
   toggleStatus(index) {
-    this.collection[index - 1].completed = !this.collection[index - 1].completed;
+    this.collection[index - 1].completed =
+      !this.collection[index - 1].completed;
   }
 
   remove(idx) {
     this.collection = this.collection.filter(
-      (task) => task.index !== parseInt(idx, 10),
+      (task) => task.index !== parseInt(idx, 10)
     );
 
     const toRemove = document.querySelector(`#task-${idx}`);
@@ -116,8 +129,8 @@ export default class TaskCollection {
   }
 
   render() {
-    const ul = document.querySelector('ul');
-    ul.innerHTML = '';
+    const ul = document.querySelector("ul");
+    ul.innerHTML = "";
     this.resetIndexes();
     this.getCollection().forEach((task) => {
       ul.appendChild(this.returnTaskLIMarkup(task));
@@ -131,37 +144,42 @@ export default class TaskCollection {
   }
 
   returnTaskLIMarkup(task) {
-    const listItem = document.createElement('li');
-    listItem.className = 'd-flex item';
+    const listItem = document.createElement("li");
+    listItem.className = "d-flex item";
     listItem.id = `task-${task.index}`;
-    listItem.setAttribute('draggable', true);
-    const label = document.createElement('label');
+    listItem.setAttribute("draggable", true);
+    const label = document.createElement("label");
     label.id = `label-${task.index}`;
-    label.setAttribute('for', `task${task.index}`);
-    const status = document.createElement('input');
-    status.setAttribute('type', 'checkbox');
+    label.setAttribute("for", `task${task.index}`);
+    const status = document.createElement("input");
+    status.setAttribute("type", "checkbox");
     status.id = `task${task.index}`;
-    status.setAttribute('name', `status-${task.index}`);
-    status.className = 'status-input';
+    status.setAttribute("name", `status-${task.index}`);
+    status.className = "status-input";
+
     label.appendChild(status);
+    status.insertAdjacentHTML(
+      "afterend",
+      "&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;"
+    );
     label.append(task.description);
     listItem.appendChild(label);
-    const controls = document.createElement('div');
+    const controls = document.createElement("div");
     controls.id = `controls-${task.index}`;
-    controls.classList.add('controls');
-    const removeBtn = document.createElement('button');
-    removeBtn.classList.add('remove-btn');
+    controls.classList.add("controls");
+    const removeBtn = document.createElement("button");
+    removeBtn.classList.add("remove-btn");
     removeBtn.id = `remove-btn-${task.index}`;
-    removeBtn.innerText = 'Delete';
+    removeBtn.innerHTML = `<i class="fa-solid fa-trash-can"></i>`;
     controls.appendChild(removeBtn);
-    const editBtn = document.createElement('button');
-    editBtn.classList.add('edit-btn');
+    const editBtn = document.createElement("button");
+    editBtn.classList.add("edit-btn");
     editBtn.id = `edit-btn-${task.index}`;
-    editBtn.innerText = 'Edit';
+    editBtn.innerHTML = `<i class="fa-solid fa-pen-to-square"></i>`;
     controls.appendChild(editBtn);
-    const editInput = document.createElement('input');
-    editInput.setAttribute('type', 'text');
-    editInput.className = 'edit-input d-none';
+    const editInput = document.createElement("input");
+    editInput.setAttribute("type", "text");
+    editInput.className = "edit-input d-none";
     editInput.value = task.description;
     editInput.id = `edit-input-${task.index}`;
     listItem.appendChild(editInput);
@@ -177,7 +195,7 @@ export default class TaskCollection {
 
   editTask(index, data) {
     const idx = this.collection.findIndex(
-      (task) => task.index === parseInt(index, 10),
+      (task) => task.index === parseInt(index, 10)
     );
     this.collection[idx].description = data;
     populateStorage(this.getCollection());
