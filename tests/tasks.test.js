@@ -31,7 +31,7 @@ describe('Remove Task', () => {
   });
 });
 
-describe('Edit task', () => {
+describe('Edit  description', () => {
   test('Task should not be equal to new task', () => {
     const availableTask = tasksCollection.getTask(1);
     tasksCollection.editTask(availableTask.index, 'new desc');
@@ -39,11 +39,21 @@ describe('Edit task', () => {
   });
 });
 
-describe('Edit Complete Status', () => {
+describe('Edit  Complete Status', () => {
   test('Status should be the oppisite of the old status', () => {
     const availableTask = tasksCollection.getTask(1);
-    tasksCollection.toggleStatus(availableTask.index);
-    expect(availableTask.completed).toBeTruthy();
-    expect(availableTask.completed).not.toBeFalsy();
+   const status = tasksCollection.toggleStatus(availableTask.index);
+    expect(status).toBe(availableTask.completed);
+  });
+});
+
+describe('Clear All Completed', () => {
+  test('After clear all, completed should be false for all remaining tasks', () => {
+    tasksCollection.add('desc 2');
+    tasksCollection.add('desc 3');
+    tasksCollection.add('desc 4');
+    tasksCollection.toggleStatus(4);
+    tasksCollection.clearAll();
+    expect(tasksCollection.getCollection()).toHaveLength(2);
   });
 });
