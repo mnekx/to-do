@@ -35,6 +35,9 @@ Fontawesome 6.0.0 or higher
 3. npm install
 4. npm start to serve into local 8080 port
 
+### Run tests
+run: npm run test
+
 ### Deployment
 https://mnekx.github.io/to-do/dist/
 
