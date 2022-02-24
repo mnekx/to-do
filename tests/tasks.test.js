@@ -42,7 +42,7 @@ describe('Edit  description', () => {
 describe('Edit  Complete Status', () => {
   test('Status should be the oppisite of the old status', () => {
     const availableTask = tasksCollection.getTask(1);
-   const status = tasksCollection.toggleStatus(availableTask.index);
+    const status = tasksCollection.toggleStatus(availableTask.index);
     expect(status).toBe(availableTask.completed);
   });
 });
