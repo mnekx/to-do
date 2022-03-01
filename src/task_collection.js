@@ -97,6 +97,7 @@ export default class TaskCollection {
 
   toggleStatus(index) {
     this.collection[index - 1].completed = !this.collection[index - 1].completed;
+    return this.collection[index - 1].completed;
   }
 
   remove(idx) {
