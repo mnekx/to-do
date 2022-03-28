@@ -167,11 +167,13 @@ export default class TaskCollection {
     controls.id = `controls-${task.index}`;
     controls.classList.add('controls');
     const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
     removeBtn.classList.add('remove-btn');
     removeBtn.id = `remove-btn-${task.index}`;
     removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
     controls.appendChild(removeBtn);
     const editBtn = document.createElement('button');
+    editBtn.type = 'button';
     editBtn.classList.add('edit-btn');
     editBtn.id = `edit-btn-${task.index}`;
     editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
