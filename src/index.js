@@ -63,11 +63,35 @@ items.forEach((item) => {
 });
 
 const addInput = document.querySelector('#add-input');
+// const lableForAddInput = document.querySelector('label[for="add-input"');
 addInput.addEventListener('keypress', (e) => {
   if (e.keyCode === 13) {
-    tasks.add(e.target.value);
-    e.preventDefault();
-    e.target.value = '';
+    if (addInput.validity.valueMissing) {
+      addInput.classList.add('error');
+      addInput.setCustomValidity('A task text is expected!');
+      addInput.reportValidity();
+    } else {
+      addInput.classList.remove('error');
+      tasks.add(e.target.value);
+      e.preventDefault();
+      e.target.value = '';
+    }
+  } else {
+    addInput.classList.remove('error');
+  }
+});
+
+const addBtn = document.querySelector('.add-btn');
+addBtn.addEventListener('click', () => {
+  if (addInput.validity.valueMissing) {
+    addInput.classList.add('error');
+    addInput.setCustomValidity('A task text is expected!');
+    addInput.reportValidity();
+  } else {
+    addInput.classList.remove('error');
+    tasks.add(addInput.value);
+    addInput.value = '';
+    addInput.setCustomValidity('');
   }
 });
 
