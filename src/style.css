@@ -25,6 +25,8 @@ fieldset {
 legend {
   text-align: center;
   padding: 1rem 0;
+  width: 100%;
+  border-bottom: 1px solid gray;
 }
 
 ul {
@@ -71,6 +73,10 @@ input[type="text"] {
   font-style: italic;
 }
 
+button[type='button'] {
+  border: none;
+}
+
 button[type='reset'] {
   padding: 1rem;
   border-top: 1px solid gray;
@@ -87,6 +93,26 @@ button[type='reset']:active {
   background-color: rgb(210, 210, 210);
 }
 
+.edit-btn {
+  color: orange;
+}
+
+.remove-btn {
+  color: red;
+}
+
+.edit-btn:hover,
+.remove-btn:hover {
+  cursor: pointer;
+}
+
+input[type="text"].error {
+  border: 1px solid red;
+}
+
 #add-input {
-  border-top: 1px solid gray;
+  width: 93%;
+  padding-right: 0;
+  margin-right: 0;
+  margin-left: 2rem;
 }
