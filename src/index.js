@@ -85,7 +85,7 @@ const addBtn = document.querySelector('.add-btn');
 addBtn.addEventListener('click', () => {
   if (addInput.validity.valueMissing) {
     addInput.classList.add('error');
-    addInput.setCustomValidity('A task text is expected!');
+    addInput.setCustomValidity('A new task is expected!');
     addInput.reportValidity();
   } else {
     addInput.classList.remove('error');
