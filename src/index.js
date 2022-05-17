@@ -15,12 +15,12 @@ function dragStart(e) {
 }
 
 function dragEnter() {
-  this.classList.add('over');
+  this.classList.add('drag');
 }
 
 function dragLeave(e) {
   e.stopPropagation();
-  this.classList.remove('over');
+  this.classList.remove('drag');
 }
 
 function dragOver(e) {
@@ -40,7 +40,7 @@ function dragDrop(e) {
 function dragEnd() {
   const listItens = document.querySelectorAll('.item');
   [].forEach.call(listItens, (item) => {
-    item.classList.remove('over');
+    item.classList.remove('drag');
   });
   this.style.opacity = '1';
 }
@@ -63,10 +63,35 @@ items.forEach((item) => {
 });
 
 const addInput = document.querySelector('#add-input');
+// const lableForAddInput = document.querySelector('label[for="add-input"');
 addInput.addEventListener('keypress', (e) => {
   if (e.keyCode === 13) {
-    tasks.add(e.target.value);
-    e.preventDefault();
+    if (addInput.validity.valueMissing) {
+      addInput.classList.add('error');
+      addInput.setCustomValidity('A new task is expected!');
+      addInput.reportValidity();
+    } else {
+      addInput.classList.remove('error');
+      tasks.add(e.target.value);
+      e.preventDefault();
+      e.target.value = '';
+    }
+  } else {
+    addInput.classList.remove('error');
+  }
+});
+
+const addBtn = document.querySelector('.add-btn');
+addBtn.addEventListener('click', () => {
+  if (addInput.validity.valueMissing) {
+    addInput.classList.add('error');
+    addInput.setCustomValidity('A new task is expected!');
+    addInput.reportValidity();
+  } else {
+    addInput.classList.remove('error');
+    tasks.add(addInput.value);
+    addInput.value = '';
+    addInput.setCustomValidity('');
   }
 });
 

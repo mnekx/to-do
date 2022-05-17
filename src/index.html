@@ -7,11 +7,19 @@
   </head>
   <body>
     <main class="container">
-      <form action="#" class="d-flex">
+      <form action="#" novalidate class="d-flex">
         <fieldset>
-          <legend class="container"><h1>Today's ToDo</h1></legend>
+          <legend><h1>Today's ToDo</h1></legend>
           <label for="add-input">
-            <input type="text" id="add-input" placeholder="Add to list..." />
+            <input
+              type="text"
+              id="add-input"
+              required
+              placeholder="Add to list..."
+            />
+            <span class="add-btn">
+              <i class="add-btn fa-solid fa-plus"></i>
+            </span>
           </label>
           <ul></ul>
           <button id="reset-btn" class="reset" type="reset">

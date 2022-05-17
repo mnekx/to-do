@@ -1,4 +1,5 @@
 import { initializeLocalStorage, populateStorage } from './local_storage.js';
+import '@fortawesome/fontawesome-free/js/all.js';
 
 export default class TaskCollection {
   static counter = 0;
@@ -65,11 +66,21 @@ export default class TaskCollection {
         const status = document.createElement('input');
         status.setAttribute('type', 'checkbox');
         status.id = `task${index}`;
+        status.classList.add('status-input');
         status.setAttribute('name', `status-${index}`);
         label.appendChild(status);
+        status.insertAdjacentHTML(
+          'afterend',
+          '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+        );
         label.append(e.target.value);
         const editInput = document.querySelector(`#edit-input-${index}`);
         editInput.classList.add('d-none');
+
+        this.addStatusEventListener(index);
+        this.addTaskEditBtnEventListener(index);
+        this.addTaskEditInputEventListener(index);
+        this.addTaskRemoveEventListener(index);
       }
     });
   }
@@ -79,13 +90,14 @@ export default class TaskCollection {
     statusInput.addEventListener('change', () => {
       this.toggleStatus(index);
       populateStorage(this.getCollection());
-      const containingLI = document.querySelector(`#task-${index}`);
-      containingLI.classList.toggle('completed');
+      const containingLabel = document.querySelector(`#label-${index}`);
+      containingLabel.classList.toggle('completed');
     });
   }
 
   toggleStatus(index) {
     this.collection[index - 1].completed = !this.collection[index - 1].completed;
+    return this.collection[index - 1].completed;
   }
 
   remove(idx) {
@@ -143,21 +155,28 @@ export default class TaskCollection {
     status.id = `task${task.index}`;
     status.setAttribute('name', `status-${task.index}`);
     status.className = 'status-input';
+
     label.appendChild(status);
+    status.insertAdjacentHTML(
+      'afterend',
+      '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
+    );
     label.append(task.description);
     listItem.appendChild(label);
     const controls = document.createElement('div');
     controls.id = `controls-${task.index}`;
     controls.classList.add('controls');
     const removeBtn = document.createElement('button');
+    removeBtn.type = 'button';
     removeBtn.classList.add('remove-btn');
     removeBtn.id = `remove-btn-${task.index}`;
-    removeBtn.innerText = 'Delete';
+    removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
     controls.appendChild(removeBtn);
     const editBtn = document.createElement('button');
+    editBtn.type = 'button';
     editBtn.classList.add('edit-btn');
     editBtn.id = `edit-btn-${task.index}`;
-    editBtn.innerText = 'Edit';
+    editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
     controls.appendChild(editBtn);
     const editInput = document.createElement('input');
     editInput.setAttribute('type', 'text');
@@ -185,6 +204,7 @@ export default class TaskCollection {
 
   clearAll() {
     this.collection = this.collection.filter((task) => !task.completed);
+    this.resetIndexes();
     populateStorage(this.collection);
     this.render();
   }
