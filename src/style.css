@@ -61,6 +61,7 @@ input {
 
 input[type="checkbox"] {
   opacity: 1;
+  z-index: 1;
 }
 
 input[type="text"] {
@@ -68,7 +69,6 @@ input[type="text"] {
   outline: none;
   border: none;
   padding: 0.7rem 1.3rem;
-  height: 3rem;
   font-size: 1.2rem;
   font-style: italic;
 }
@@ -97,8 +97,24 @@ button[type='reset']:active {
   color: orange;
 }
 
-.remove-btn {
-  color: red;
+.edit-input {
+  z-index: 3;
+}
+
+.controls {
+  width: 100%;
+}
+
+.trash-btn {
+  margin-right: -0.7rem;
+}
+
+.trash-btn:hover {
+  cursor: pointer;
+}
+
+.trash-btn, .ellispis-btn {
+  z-index: 3;
 }
 
 .edit-btn:hover,
