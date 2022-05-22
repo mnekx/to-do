@@ -1,5 +1,6 @@
 import { initializeLocalStorage, populateStorage } from './local_storage.js';
 import '@fortawesome/fontawesome-free/js/all.js';
+import resetStylesFormerEditedTask from './helpers.js';
 
 export default class TaskCollection {
   static counter = 0;
@@ -26,73 +27,84 @@ export default class TaskCollection {
 
     // Add event listeners
     this.addTaskRemoveEventListener(newTask.index);
-    this.addTaskEditBtnEventListener(newTask.index);
+    this.addEditTaskEventListener(newTask.index);
     this.addTaskEditInputEventListener(newTask.index);
     this.addStatusEventListener(newTask.index);
+    // addBlurTaskEventListener(newTask.index);
   }
 
   addTaskRemoveEventListener(index) {
-    const removeBtn = document.querySelector(`#remove-btn-${index}`);
-    removeBtn.addEventListener('click', () => {
-      this.remove(index);
-    });
+    const trashBtn = document.querySelector(`#trash-btn-${index}`);
+    if (trashBtn) {
+      trashBtn.addEventListener('click', (e) => {
+        console.log('remove task');
+        e.stopPropagation();
+        this.remove(index);
+      });
+    }
   }
 
-  addTaskEditBtnEventListener(index) {
-    const editBtn = document.querySelector(`#edit-btn-${index}`);
-    editBtn.addEventListener('click', () => {
-      const controls = document.querySelector(`#controls-${index}`);
-      controls.classList.add('d-none');
+  addEditTaskEventListener(index) {
+    const task = document.querySelector(`#task-${index}`);
+    task.addEventListener('click', (e) => {
+      console.log(e.target.id);
+      const formerEditedTask = document.querySelector('.edit-task');
+      if (formerEditedTask) {
+        const formerEditedTaskID = formerEditedTask.id.split('-').reverse()[0];
+        resetStylesFormerEditedTask(formerEditedTaskID);
+      }
+
       const label = document.querySelector(`#label-${index}`);
+      const taskText = label.innerHTML;
+      const ellipsisBtn = document.querySelector(`#ellispis-btn-${index}`);
+      ellipsisBtn.classList.add('d-none');
+      const trashBtn = document.querySelector(`#trash-btn-${index}`);
+      trashBtn.classList.remove('d-none');
       label.classList.add('d-none');
       const editInput = document.querySelector(`#edit-input-${index}`);
       editInput.classList.remove('d-none');
-    });
+      editInput.classList.add('d-block');
+      editInput.value = taskText;
+      editInput.focus();
+      task.classList.add('edit-task');
+    }, { capture: true });
     this.getCollection();
   }
 
   addTaskEditInputEventListener(index) {
     const editInput = document.querySelector(`#edit-input-${index}`);
+    editInput.addEventListener(
+      'focusout',
+      (e) => {
+        // e.preventDefault();
+        e.stopPropagation();
+      },
+    );
     editInput.addEventListener('keypress', (e) => {
       if (e.keyCode === 13) {
         this.editTask(index, e.target.value);
         e.preventDefault();
 
-        const controls = document.querySelector(`#controls-${index}`);
-        controls.classList.remove('d-none');
         const label = document.querySelector(`#label-${index}`);
-        label.innerHTML = '';
-        label.classList.remove('d-none');
-        const status = document.createElement('input');
-        status.setAttribute('type', 'checkbox');
-        status.id = `task${index}`;
-        status.classList.add('status-input');
-        status.setAttribute('name', `status-${index}`);
-        label.appendChild(status);
-        status.insertAdjacentHTML(
-          'afterend',
-          '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-        );
-        label.append(e.target.value);
-        const editInput = document.querySelector(`#edit-input-${index}`);
-        editInput.classList.add('d-none');
-
-        this.addStatusEventListener(index);
-        this.addTaskEditBtnEventListener(index);
-        this.addTaskEditInputEventListener(index);
-        this.addTaskRemoveEventListener(index);
+        label.innerHTML = e.target.value;
+        resetStylesFormerEditedTask(index);
       }
     });
   }
 
   addStatusEventListener(index) {
     const statusInput = document.querySelector(`#task${index}`);
-    statusInput.addEventListener('change', () => {
-      this.toggleStatus(index);
-      populateStorage(this.getCollection());
-      const containingLabel = document.querySelector(`#label-${index}`);
-      containingLabel.classList.toggle('completed');
-    });
+    statusInput.addEventListener(
+      'click',
+      (e) => {
+        e.stopPropagation();
+        resetStylesFormerEditedTask(index);
+        this.toggleStatus(index);
+        populateStorage(this.getCollection());
+        const containingLabel = document.querySelector(`#label-${index}`);
+        containingLabel.classList.toggle('completed');
+      },
+    );
   }
 
   toggleStatus(index) {
@@ -136,9 +148,10 @@ export default class TaskCollection {
 
       //   Add event listeners
       this.addTaskRemoveEventListener(task.index);
-      this.addTaskEditBtnEventListener(task.index);
+      this.addEditTaskEventListener(task.index);
       this.addTaskEditInputEventListener(task.index);
       this.addStatusEventListener(task.index);
+      // addBlurTaskEventListener(task.index);
     });
   }
 
@@ -149,42 +162,49 @@ export default class TaskCollection {
     listItem.setAttribute('draggable', true);
     const label = document.createElement('label');
     label.id = `label-${task.index}`;
-    label.setAttribute('for', `task${task.index}`);
+    // label.setAttribute('for', `task${task.index}`);
     const status = document.createElement('input');
     status.setAttribute('type', 'checkbox');
     status.id = `task${task.index}`;
     status.setAttribute('name', `status-${task.index}`);
     status.className = 'status-input';
 
-    label.appendChild(status);
-    status.insertAdjacentHTML(
-      'afterend',
-      '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-    );
+    listItem.appendChild(status);
     label.append(task.description);
-    listItem.appendChild(label);
+    // listItem.appendChild(label);
     const controls = document.createElement('div');
     controls.id = `controls-${task.index}`;
     controls.classList.add('controls');
-    const removeBtn = document.createElement('button');
-    removeBtn.type = 'button';
-    removeBtn.classList.add('remove-btn');
-    removeBtn.id = `remove-btn-${task.index}`;
-    removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-    controls.appendChild(removeBtn);
-    const editBtn = document.createElement('button');
-    editBtn.type = 'button';
-    editBtn.classList.add('edit-btn');
-    editBtn.id = `edit-btn-${task.index}`;
-    editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
-    controls.appendChild(editBtn);
+
+    const ellipsisBtn = document.createElement('span');
+    ellipsisBtn.classList.add('ellispis-btn');
+    ellipsisBtn.classList.add('d-flex');
+    ellipsisBtn.id = `ellispis-btn-${task.index}`;
+    ellipsisBtn.innerHTML = '<i class="fa-solid fa-ellipsis-vertical"></i>';
+
+    const trashBtn = document.createElement('span');
+    // const trashCheckbox = document.createElement('input');
+    // trashCheckbox.setAttribute('type', 'checkbox');
+    // trashCheckbox.id = `trash-checkbox-${task.index}`;
+    // trashBtn.appendChild(trashCheckbox);
+    trashBtn.classList.add('trash-btn');
+    trashBtn.classList.add('d-flex');
+    trashBtn.classList.add('d-none');
+    trashBtn.id = `trash-btn-${task.index}`;
+    trashBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
+
+    controls.appendChild(label);
     const editInput = document.createElement('input');
-    editInput.setAttribute('type', 'text');
+    // editInput.setAttribute('type', 'text');
     editInput.className = 'edit-input d-none';
     editInput.value = task.description;
+    editInput.type = 'text';
     editInput.id = `edit-input-${task.index}`;
-    listItem.appendChild(editInput);
+    controls.appendChild(editInput);
     listItem.appendChild(controls);
+    listItem.appendChild(ellipsisBtn);
+    listItem.appendChild(trashBtn);
+
     this.getCollection();
 
     return listItem;
