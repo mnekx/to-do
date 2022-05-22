@@ -37,7 +37,6 @@ export default class TaskCollection {
     const trashBtn = document.querySelector(`#trash-btn-${index}`);
     if (trashBtn) {
       trashBtn.addEventListener('click', (e) => {
-        console.log('remove task');
         e.stopPropagation();
         this.remove(index);
       });
@@ -46,8 +45,7 @@ export default class TaskCollection {
 
   addEditTaskEventListener(index) {
     const task = document.querySelector(`#task-${index}`);
-    task.addEventListener('click', (e) => {
-      console.log(e.target.id);
+    task.addEventListener('click', () => {
       const formerEditedTask = document.querySelector('.edit-task');
       if (formerEditedTask) {
         const formerEditedTaskID = formerEditedTask.id.split('-').reverse()[0];
