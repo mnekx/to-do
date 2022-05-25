@@ -36,15 +36,11 @@ legend {
   padding-right: 0.6rem;
 }
 
-legend div {
+legend span {
   position: relative;
 }
 
-legend div:hover {
-  cursor: pointer;
-}
-
-legend div div {
+legend span span {
   position: absolute;
   right: -0.5rem;
   top: -0.4rem;
@@ -57,6 +53,10 @@ legend div div {
   font-size: x-small;
   font-weight: bolder;
   color: white;
+}
+
+legend span:hover {
+  cursor: pointer;
 }
 
 ul {
@@ -166,5 +166,3 @@ input[type="text"].error {
   margin-left: 2rem;
   height: 2.5rem;
 }
-
-
