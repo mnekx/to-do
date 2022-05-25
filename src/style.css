@@ -27,6 +27,28 @@ legend {
   padding: 1rem 0;
   width: 100%;
   border-bottom: 1px solid gray;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 0.6rem;
+}
+
+legend div {
+  position: relative;
+}
+
+legend div div {
+  position: absolute;
+  right: -0.5rem;
+  top: -0.4rem;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid white;
+  border-radius: 45%;
+  background-color: red;
+  display: block;
+  font-size: x-small;
+  font-weight: bolder;
+  color: white;
 }
 
 ul {
@@ -113,12 +135,11 @@ button[type='reset']:active {
   cursor: pointer;
 }
 
-.trash-btn, .ellispis-btn {
+.ellispis-btn {
   z-index: 3;
 }
 
-.edit-btn:hover,
-.remove-btn:hover {
+.edit-btn:hover {
   cursor: pointer;
 }
 
@@ -126,9 +147,16 @@ input[type="text"].error {
   border: 1px solid red;
 }
 
+.add-btn {
+  margin-right: 0.29rem;
+}
+
 #add-input {
   width: 93%;
   padding-right: 0;
   margin-right: 0;
   margin-left: 2rem;
+  height: 2.5rem;
 }
+
+
