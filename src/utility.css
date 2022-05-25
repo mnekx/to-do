@@ -55,17 +55,14 @@
   width: 100%;
 }
 
-/* .status-input {
-  z-index: 2;
-  position: absolute;
-} */
+.trash-btn,
+.ellispis-btn,
+.status-input {
+  z-index: 1;
+}
 
 .status-input:hover {
   cursor: pointer;
-}
-
-.trash-btn, .ellispis-btn, .status-input {
-  z-index: 1;
 }
 
 .drag {
