@@ -116,3 +116,12 @@ const clearBtn = document.querySelector('#reset-btn');
 clearBtn.addEventListener('click', () => {
   tasks.clearAll();
 });
+
+const refresher = document.querySelector('.refresh');
+refresher.addEventListener('click', () => {
+  tasks.getCollection().forEach((task) => {
+    if (!task.completed) {
+      tasks.remove(task.index);
+    }
+  });
+});

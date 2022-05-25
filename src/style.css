@@ -22,6 +22,10 @@ fieldset {
   border: none;
 }
 
+h1 {
+  margin-left: 1.5rem;
+}
+
 legend {
   text-align: center;
   padding: 1rem 0;
@@ -34,6 +38,10 @@ legend {
 
 legend div {
   position: relative;
+}
+
+legend div:hover {
+  cursor: pointer;
 }
 
 legend div div {
