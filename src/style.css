@@ -160,10 +160,6 @@ input[type="text"].error {
   margin-right: 0.29rem;
 }
 
-.refresh:active {
-  transform: rotate(180deg);
-}
-
 .refresh:active span {
   display: none;
 }

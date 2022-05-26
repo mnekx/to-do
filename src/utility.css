@@ -85,3 +85,7 @@
 .edit-task input[type="text"] {
   background-color: transparent;
 }
+
+.rotate360 {
+  transform: rotate(360deg);
+}

@@ -119,6 +119,7 @@ clearBtn.addEventListener('click', () => {
 
 const refresher = document.querySelector('.refresh');
 refresher.addEventListener('click', () => {
+  refresher.classList.toggle('rotate360');
   tasks.getCollection().forEach((task) => {
     if (!task.completed) {
       tasks.remove(task.index);
