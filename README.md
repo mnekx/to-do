@@ -10,7 +10,7 @@
 - Fontawesome
 
 ## Live Demo (if available)
-[Live Demo Link](https://mnekx.github.io/to-do/dist/)
+[Live Demo Link](https://todaystodo.netlify.app/)
 
 
 ## Getting Started
@@ -39,7 +39,7 @@ Fontawesome 6.0.0 or higher
 run: npm run test
 
 ### Deployment
-https://mnekx.github.io/to-do/dist/
+https://todaystodo.netlify.app/
 
 ## Authors
 
