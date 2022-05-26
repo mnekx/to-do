@@ -127,7 +127,13 @@ button[type='reset']:active {
   width: 100%;
 }
 
-.trash-btn, .refresh, .ellispis-btn {
+.refresh {
+  transition: transform ease-in 0.2s;
+}
+
+.trash-btn,
+.refresh,
+.ellispis-btn {
   opacity: 0.5;
 }
 
@@ -135,7 +141,8 @@ button[type='reset']:active {
   margin-right: -0.7rem;
 }
 
-.trash-btn:hover, .refresh:hover {
+.trash-btn:hover,
+.refresh:hover {
   cursor: pointer;
   opacity: 1;
 }
@@ -154,10 +161,6 @@ input[type="text"].error {
 
 .add-btn {
   margin-right: 0.29rem;
-}
-
-.refresh {
-  transition: transform ease-in 0.2s;
 }
 
 .refresh:active {
