@@ -55,10 +55,6 @@ legend span span {
   color: white;
 }
 
-legend span:hover {
-  cursor: pointer;
-}
-
 ul {
   list-style: none;
 }
@@ -123,10 +119,6 @@ button[type='reset']:active {
   background-color: rgb(210, 210, 210);
 }
 
-.edit-btn {
-  color: orange;
-}
-
 .edit-input {
   z-index: 3;
 }
@@ -135,20 +127,25 @@ button[type='reset']:active {
   width: 100%;
 }
 
+.trash-btn, .refresh, .ellispis-btn {
+  opacity: 0.5;
+}
+
 .trash-btn {
   margin-right: -0.7rem;
 }
 
-.trash-btn:hover {
+.trash-btn:hover, .refresh:hover {
   cursor: pointer;
+  opacity: 1;
 }
 
 .ellispis-btn {
   z-index: 3;
 }
 
-.edit-btn:hover {
-  cursor: pointer;
+.ellispis-btn:hover {
+  opacity: 1;
 }
 
 input[type="text"].error {
@@ -157,6 +154,18 @@ input[type="text"].error {
 
 .add-btn {
   margin-right: 0.29rem;
+}
+
+.refresh {
+  transition: transform ease-in 0.2s;
+}
+
+.refresh:active {
+  transform: rotate(180deg);
+}
+
+.refresh:active span {
+  display: none;
 }
 
 #add-input {
