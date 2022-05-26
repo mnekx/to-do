@@ -34,16 +34,13 @@ legend {
   align-items: center;
   justify-content: space-between;
   padding-right: 0.6rem;
-}
-
-legend span {
   position: relative;
 }
 
-legend span span {
+.badge {
   position: absolute;
-  right: -0.5rem;
-  top: -0.4rem;
+  right: 0.1rem;
+  top: 1rem;
   width: 1rem;
   height: 1rem;
   border: 2px solid white;

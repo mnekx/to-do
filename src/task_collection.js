@@ -19,7 +19,7 @@ export default class TaskCollection {
     const newTask = { index: idx, description: desc, completed: false };
     this.collection.push(newTask);
 
-    const badge = document.querySelector('legend span span');
+    const badge = document.querySelector('.badge');
     badge.innerHTML = this.getUncompletedTasksNo();
 
     populateStorage(this.getCollection());
@@ -70,7 +70,7 @@ export default class TaskCollection {
       e.stopPropagation();
       resetStylesFormerEditedTask(index);
       this.toggleStatus(index);
-      const badge = document.querySelector('legend span span');
+      const badge = document.querySelector('.badge');
       badge.innerHTML = this.getUncompletedTasksNo();
       populateStorage(this.getCollection());
       const containingLabel = document.querySelector(`#label-${index}`);
@@ -128,7 +128,7 @@ export default class TaskCollection {
 
   render() {
     const ul = document.querySelector('ul');
-    const badge = document.querySelector('legend span span');
+    const badge = document.querySelector('.badge');
     badge.innerHTML = this.getUncompletedTasksNo();
     ul.innerHTML = '';
     this.resetIndexes();
