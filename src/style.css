@@ -22,11 +22,34 @@ fieldset {
   border: none;
 }
 
+h1 {
+  margin-left: 1.5rem;
+}
+
 legend {
   text-align: center;
   padding: 1rem 0;
   width: 100%;
   border-bottom: 1px solid gray;
+  align-items: center;
+  justify-content: space-between;
+  padding-right: 0.6rem;
+  position: relative;
+}
+
+.badge {
+  position: absolute;
+  right: 0.1rem;
+  top: 1rem;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid white;
+  border-radius: 45%;
+  background-color: red;
+  display: block;
+  font-size: x-small;
+  font-weight: bolder;
+  color: white;
 }
 
 ul {
@@ -61,6 +84,7 @@ input {
 
 input[type="checkbox"] {
   opacity: 1;
+  z-index: 1;
 }
 
 input[type="text"] {
@@ -68,7 +92,6 @@ input[type="text"] {
   outline: none;
   border: none;
   padding: 0.7rem 1.3rem;
-  height: 3rem;
   font-size: 1.2rem;
   font-style: italic;
 }
@@ -93,21 +116,52 @@ button[type='reset']:active {
   background-color: rgb(210, 210, 210);
 }
 
-.edit-btn {
-  color: orange;
+.edit-input {
+  z-index: 3;
 }
 
-.remove-btn {
-  color: red;
+.controls {
+  width: 100%;
 }
 
-.edit-btn:hover,
-.remove-btn:hover {
+.refresh {
+  transition: transform ease-in 0.2s;
+}
+
+.trash-btn,
+.refresh,
+.ellispis-btn {
+  opacity: 0.5;
+}
+
+.trash-btn {
+  margin-right: -0.7rem;
+}
+
+.trash-btn:hover,
+.refresh:hover {
   cursor: pointer;
+  opacity: 1;
+}
+
+.ellispis-btn {
+  z-index: 3;
+}
+
+.ellispis-btn:hover {
+  opacity: 1;
 }
 
 input[type="text"].error {
   border: 1px solid red;
+}
+
+.add-btn {
+  margin-right: 0.29rem;
+}
+
+.refresh:active span {
+  display: none;
 }
 
 #add-input {
@@ -115,4 +169,5 @@ input[type="text"].error {
   padding-right: 0;
   margin-right: 0;
   margin-left: 2rem;
+  height: 2.5rem;
 }

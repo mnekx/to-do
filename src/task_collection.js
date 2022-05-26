@@ -1,5 +1,6 @@
 import { initializeLocalStorage, populateStorage } from './local_storage.js';
 import '@fortawesome/fontawesome-free/js/all.js';
+import { resetStylesFormerEditedTask, returnTaskLIMarkup, addEditTaskEventListener } from './helpers.js';
 
 export default class TaskCollection {
   static counter = 0;
@@ -18,81 +19,63 @@ export default class TaskCollection {
     const newTask = { index: idx, description: desc, completed: false };
     this.collection.push(newTask);
 
+    const badge = document.querySelector('.badge');
+    badge.innerHTML = this.getUncompletedTasksNo();
+
     populateStorage(this.getCollection());
 
     // Append task to the markup
     const ul = document.querySelector('ul');
-    ul.appendChild(this.returnTaskLIMarkup(newTask));
+    ul.appendChild(returnTaskLIMarkup(newTask));
 
     // Add event listeners
     this.addTaskRemoveEventListener(newTask.index);
-    this.addTaskEditBtnEventListener(newTask.index);
+    addEditTaskEventListener(newTask.index);
     this.addTaskEditInputEventListener(newTask.index);
     this.addStatusEventListener(newTask.index);
+    // addBlurTaskEventListener(newTask.index);
   }
 
   addTaskRemoveEventListener(index) {
-    const removeBtn = document.querySelector(`#remove-btn-${index}`);
-    removeBtn.addEventListener('click', () => {
-      this.remove(index);
-    });
-  }
-
-  addTaskEditBtnEventListener(index) {
-    const editBtn = document.querySelector(`#edit-btn-${index}`);
-    editBtn.addEventListener('click', () => {
-      const controls = document.querySelector(`#controls-${index}`);
-      controls.classList.add('d-none');
-      const label = document.querySelector(`#label-${index}`);
-      label.classList.add('d-none');
-      const editInput = document.querySelector(`#edit-input-${index}`);
-      editInput.classList.remove('d-none');
-    });
-    this.getCollection();
+    const trashBtn = document.querySelector(`#trash-btn-${index}`);
+    if (trashBtn) {
+      trashBtn.addEventListener('click', (e) => {
+        e.stopPropagation();
+        this.remove(index);
+      }, { capture: true });
+    }
   }
 
   addTaskEditInputEventListener(index) {
     const editInput = document.querySelector(`#edit-input-${index}`);
+    editInput.addEventListener('focusout', (e) => {
+      // e.preventDefault();
+      e.stopPropagation();
+    });
     editInput.addEventListener('keypress', (e) => {
       if (e.keyCode === 13) {
         this.editTask(index, e.target.value);
         e.preventDefault();
 
-        const controls = document.querySelector(`#controls-${index}`);
-        controls.classList.remove('d-none');
         const label = document.querySelector(`#label-${index}`);
-        label.innerHTML = '';
-        label.classList.remove('d-none');
-        const status = document.createElement('input');
-        status.setAttribute('type', 'checkbox');
-        status.id = `task${index}`;
-        status.classList.add('status-input');
-        status.setAttribute('name', `status-${index}`);
-        label.appendChild(status);
-        status.insertAdjacentHTML(
-          'afterend',
-          '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-        );
-        label.append(e.target.value);
-        const editInput = document.querySelector(`#edit-input-${index}`);
-        editInput.classList.add('d-none');
-
-        this.addStatusEventListener(index);
-        this.addTaskEditBtnEventListener(index);
-        this.addTaskEditInputEventListener(index);
-        this.addTaskRemoveEventListener(index);
+        label.innerHTML = e.target.value;
+        resetStylesFormerEditedTask(index);
       }
     });
   }
 
   addStatusEventListener(index) {
     const statusInput = document.querySelector(`#task${index}`);
-    statusInput.addEventListener('change', () => {
+    statusInput.addEventListener('click', (e) => {
+      e.stopPropagation();
+      resetStylesFormerEditedTask(index);
       this.toggleStatus(index);
+      const badge = document.querySelector('.badge');
+      badge.innerHTML = this.getUncompletedTasksNo();
       populateStorage(this.getCollection());
       const containingLabel = document.querySelector(`#label-${index}`);
       containingLabel.classList.toggle('completed');
-    });
+    }, { capture: true });
   }
 
   toggleStatus(index) {
@@ -112,6 +95,11 @@ export default class TaskCollection {
     this.render();
   }
 
+  updateTaskIndex(index, newTaskIndex) {
+    this.collection[index].index = newTaskIndex;
+    populateStorage(this.collection);
+  }
+
   resetIndexes() {
     for (let idx = 1; idx <= this.getCollection().length; idx += 1) {
       const task = this.getCollection()[idx - 1];
@@ -119,8 +107,19 @@ export default class TaskCollection {
     }
   }
 
+  swapTaskPositions(index1, index2) {
+    const temp = this.collection[index1];
+    this.collection[index1] = this.collection[index2];
+    this.collection[index2] = temp;
+  }
+
   getCollection() {
     return this.collection;
+  }
+
+  orderIndexwise() {
+    this.collection = this.collection.sort((a, b) => a.index - b.index);
+    populateStorage(this.collection);
   }
 
   setTasks(tasksArr) {
@@ -129,65 +128,20 @@ export default class TaskCollection {
 
   render() {
     const ul = document.querySelector('ul');
+    const badge = document.querySelector('.badge');
+    badge.innerHTML = this.getUncompletedTasksNo();
     ul.innerHTML = '';
     this.resetIndexes();
     this.getCollection().forEach((task) => {
-      ul.appendChild(this.returnTaskLIMarkup(task));
+      ul.appendChild(returnTaskLIMarkup(task));
 
       //   Add event listeners
       this.addTaskRemoveEventListener(task.index);
-      this.addTaskEditBtnEventListener(task.index);
+      addEditTaskEventListener(task.index);
       this.addTaskEditInputEventListener(task.index);
       this.addStatusEventListener(task.index);
+      // addBlurTaskEventListener(task.index);
     });
-  }
-
-  returnTaskLIMarkup(task) {
-    const listItem = document.createElement('li');
-    listItem.className = 'd-flex item';
-    listItem.id = `task-${task.index}`;
-    listItem.setAttribute('draggable', true);
-    const label = document.createElement('label');
-    label.id = `label-${task.index}`;
-    label.setAttribute('for', `task${task.index}`);
-    const status = document.createElement('input');
-    status.setAttribute('type', 'checkbox');
-    status.id = `task${task.index}`;
-    status.setAttribute('name', `status-${task.index}`);
-    status.className = 'status-input';
-
-    label.appendChild(status);
-    status.insertAdjacentHTML(
-      'afterend',
-      '&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;',
-    );
-    label.append(task.description);
-    listItem.appendChild(label);
-    const controls = document.createElement('div');
-    controls.id = `controls-${task.index}`;
-    controls.classList.add('controls');
-    const removeBtn = document.createElement('button');
-    removeBtn.type = 'button';
-    removeBtn.classList.add('remove-btn');
-    removeBtn.id = `remove-btn-${task.index}`;
-    removeBtn.innerHTML = '<i class="fa-solid fa-trash-can"></i>';
-    controls.appendChild(removeBtn);
-    const editBtn = document.createElement('button');
-    editBtn.type = 'button';
-    editBtn.classList.add('edit-btn');
-    editBtn.id = `edit-btn-${task.index}`;
-    editBtn.innerHTML = '<i class="fa-solid fa-pen-to-square"></i>';
-    controls.appendChild(editBtn);
-    const editInput = document.createElement('input');
-    editInput.setAttribute('type', 'text');
-    editInput.className = 'edit-input d-none';
-    editInput.value = task.description;
-    editInput.id = `edit-input-${task.index}`;
-    listItem.appendChild(editInput);
-    listItem.appendChild(controls);
-    this.getCollection();
-
-    return listItem;
   }
 
   getTask(id) {
@@ -200,6 +154,11 @@ export default class TaskCollection {
     );
     this.collection[idx].description = data;
     populateStorage(this.getCollection());
+  }
+
+  getUncompletedTasksNo() {
+    const uncompletedTasks = this.collection.filter((task) => !task.completed);
+    return uncompletedTasks.length;
   }
 
   clearAll() {

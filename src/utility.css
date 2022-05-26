@@ -10,7 +10,7 @@
 .item {
   justify-content: space-between;
   border-bottom: 1px solid gray;
-  align-items: baseline;
+  align-items: center;
   padding: 0.7rem 1.3rem;
 }
 
@@ -23,7 +23,7 @@
 }
 
 .item:hover {
-  cursor: move;
+  cursor: text;
 }
 
 .delete,
@@ -55,19 +55,37 @@
   width: 100%;
 }
 
+.trash-btn,
+.ellispis-btn,
 .status-input {
-  z-index: 2;
-  position: absolute;
+  z-index: 1;
 }
 
 .status-input:hover {
   cursor: pointer;
 }
 
-.remove-btn {
-  margin-right: 0.3rem;
-}
-
 .drag {
   opacity: 0.8;
+}
+
+.ellispis-btn {
+  width: 2rem;
+  margin-right: -2rem;
+}
+
+.ellispis-btn:hover {
+  cursor: move;
+}
+
+.edit-task {
+  background-color: orange;
+}
+
+.edit-task input[type="text"] {
+  background-color: transparent;
+}
+
+.rotate360 {
+  transform: rotate(360deg);
 }
